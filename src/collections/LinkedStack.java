@@ -1,45 +1,33 @@
 package collections;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 
-public class LinkedQueue<T> extends AbstractQueue<T> {
+public class LinkedStack<T> extends AbstractStack<T> {
 
     private Node<T> headNode;
-    private Node<T> tailNode;
 
-    public LinkedQueue() {
+    public LinkedStack() {
         super();
         headNode = null;
-        tailNode = null;
     }
 
-
     @Override
-    public void addLast(T element) {
+    public void addFirst(T element) {
         if(isEmpty()) {
             headNode = new Node<>(element);
-            tailNode = headNode;
             size++;
             return;
         }
-        tailNode.nextNode = new Node<>(element);
-        tailNode = tailNode.nextNode;
+        Node<T> prependingNode = new Node<>(element);
+        prependingNode.nextNode = headNode;
+        headNode = prependingNode;
         size++;
     }
 
-
     @Override
     public T removeFirst() {
-        if(isEmpty()) {
-            return null;
-        }
-        if(size == 1) {
-            T data = headNode.data;
-            headNode = null;
-            tailNode = null;
-            size--;
-            return data;
-        }
+        if(isEmpty()) return null;
         T data = headNode.data;
         headNode = headNode.nextNode;
         size--;
@@ -51,15 +39,27 @@ public class LinkedQueue<T> extends AbstractQueue<T> {
         return headNode.data;
     }
 
+    /**
+     * This method should not be used. It is not working as of right now.
+     *
+     * @return the collection as an array.
+     */
     @Override
     public T[] toArray() {
         return null;
     }
 
+    /**
+     * Uses a linear search to see if an object is present in the collection.
+     *
+     * @param element the object that you are trying to search for in the collection.
+     * @return true if the object is in the collection. False if else.
+     */
     @Override
     public boolean contains(T element) {
         if(isEmpty()) return false;
-        if(tailNode.data.equals(element) || headNode.data.equals(element)) return true;
+        if(headNode.data.equals(element)) return true;
+
         for(T t : this) {
             if(t.equals(element)) {
                 return true;
@@ -68,31 +68,37 @@ public class LinkedQueue<T> extends AbstractQueue<T> {
         return false;
     }
 
+    /**
+     * Clears the collection to have all null values.
+     */
     @Override
     public void clear() {
         headNode = null;
-        tailNode = null;
         size = 0;
     }
 
     @Override
     public String toString() {
         if(isEmpty()) {
-            return "Queue is empty";
+            return "Stack is empty";
         }
         var stringBuilder = new StringBuilder();
-        var queueIterator = iterator();
+        var stackIterator = iterator();
         for(int i = 0; i < size - 1; i++) {
-            stringBuilder.append(queueIterator.next()).append(" <- ");
+            stringBuilder.append(stackIterator.next()).append(" <- ");
         }
-        return stringBuilder.append(queueIterator.next()).toString();
+        return stringBuilder.append(stackIterator.next()).toString();
     }
 
+
+    /**
+     * Returns an iterator over elements of type {@code T}.
+     *
+     * @return an Iterator.
+     */
     @Override
     public Iterator<T> iterator() {
-
         return new Iterator<>() {
-
             Node<T> currentNode = headNode;
 
             @Override

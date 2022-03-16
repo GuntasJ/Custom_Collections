@@ -32,7 +32,7 @@ public abstract class AbstractArrayList<T> implements List<T> {
     @Override
     public void addLast(T element) {
         if(size == internalArray.length) {
-            allocateMemory();
+            allocateMoreMemory();
         }
         internalArray[size] = element;
         size++;
@@ -46,13 +46,11 @@ public abstract class AbstractArrayList<T> implements List<T> {
             return;
         }
         if(size == internalArray.length)
-            allocateMemory();
+            allocateMoreMemory();
         if (size >= 0) System.arraycopy(internalArray, 0, internalArray, 1, size);
         internalArray[0] = element;
         size++;
     }
-    // 1 2 3
-    // 0 1 2 3
 
     @Override
     public void addAt(int index, T element) {
@@ -66,7 +64,7 @@ public abstract class AbstractArrayList<T> implements List<T> {
             return;
         }
         if(size == internalArray.length)
-            allocateMemory();
+            allocateMoreMemory();
         if (size - index >= 0) System.arraycopy(internalArray, index, internalArray, index + 1, size - index);
         internalArray[index] = element;
         size++;
@@ -156,7 +154,9 @@ public abstract class AbstractArrayList<T> implements List<T> {
         internalArray = Arrays.copyOf(internalArray, DEFAULT_ARRAY_SIZE);
     }
 
-    protected abstract void allocateMemory();
+    protected abstract void allocateMoreMemory();
+
+    protected abstract void allocateLessMemory();
 
     @Override
     public Iterator<T> iterator() {

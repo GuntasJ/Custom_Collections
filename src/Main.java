@@ -1,23 +1,23 @@
 import collections.ArrayList;
-import collections.LinkedQueue;
-import collections.List;
-import collections.Queue;
+import collections.LinkedStack;
+import collections.Stack;
+
 
 public class Main {
     public static void main(String[] args) {
-        Queue<Integer> integerQueue = new LinkedQueue<>();
+        ArrayList<Integer> integers = new ArrayList<>();
 
-        for(int i = 0; i < 10; i++) {
-            integerQueue.addLast(i);
+        for(int i = 0; i < 100; i++) {
+            integers.addLast(i);
         }
 
+        System.out.println(integers);
 
-        System.out.println(integerQueue);
-        System.out.println(integerQueue.getSize());
+        Integer x = integers.get(10);
 
-        integerQueue.removeFirst();
 
-        System.out.println(integerQueue);
-        System.out.println(integerQueue.getSize());
+        System.out.println(x);
     }
+
+
 }
