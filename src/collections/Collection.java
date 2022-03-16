@@ -21,8 +21,16 @@ public interface Collection<T> {
      * @return true if the object is in the collection. False if else.
      */
     boolean contains(T element);
+
+    /**
+     * Clears the collection to have all null values.
+     */
     void clear();
 
+    /**
+     * Checks to see if the container is empty
+     * @return True if container is empty, False otherwise
+     */
     default boolean isEmpty() {
         return getSize() == 0;
     }

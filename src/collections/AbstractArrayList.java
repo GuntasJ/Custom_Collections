@@ -82,7 +82,10 @@ public abstract class AbstractArrayList<T> implements List<T> {
 
     @Override
     public T removeFirst() {
-        return null;
+        T data = internalArray[0];
+        if (size >= 0) System.arraycopy(internalArray, 1, internalArray, 0, size);
+        size--;
+        return data;
     }
 
     @Override
