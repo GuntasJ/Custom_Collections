@@ -1,27 +1,19 @@
-import collections.ArrayList;
-import collections.Deque;
-import collections.LinkedDeque;
-import collections.LinkedStack;
-import collections.Queue;
-import collections.Stack;
-
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.LinkedList;
-
+import collections.DoublyLinkedList;
+import collections.List;
 
 public class Main {
     public static void main(String[] args) {
+        List<Integer> integerList = new DoublyLinkedList<>();
 
-        Deque<Integer> integerDeque = new LinkedDeque<>();
-
-        for(int i = 0; i < 20; i++) {
-            integerDeque.addLast(i);
+        for(int i = 0; i < 10; i++) {
+            integerList.addLast(i);
         }
 
-        System.out.println(integerDeque);
+        System.out.println(integerList);
 
+        integerList.addAt(3, -1000);
 
+        System.out.println(integerList);
     }
 
 

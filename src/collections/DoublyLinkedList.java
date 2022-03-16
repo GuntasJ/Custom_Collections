@@ -2,6 +2,7 @@ package collections;
 
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.Objects;
 
 public class DoublyLinkedList<T> extends AbstractLinkedList<T> {
 
@@ -47,7 +48,32 @@ public class DoublyLinkedList<T> extends AbstractLinkedList<T> {
 
     @Override
     public void addAt(int index, T element) {
+        Objects.checkIndex(index, size);
+        if(index == 0) {
+            addFirst(element);
+            return;
+        }
+        if(index == size - 1) {
+            addLast(element);
+            return;
+        }
+        Node<T> addingNode = new Node<>(element);
+        Node<T> currentNode;
+        int halfwayPoint = size / 2;
+        if(index <= halfwayPoint) {
+            currentNode = headNode;
+            for(int i = 0; i < index - 1; i++) {
+                currentNode = currentNode.nextNode;
+            }
+            addingNode.nextNode = currentNode.nextNode;
+            currentNode.nextNode.previousNode = addingNode;
+            currentNode.nextNode = addingNode;
+            addingNode.previousNode = currentNode;
+        }
+        if(index > halfwayPoint) {
 
+        }
+        size++;
     }
 
     @Override
@@ -76,6 +102,19 @@ public class DoublyLinkedList<T> extends AbstractLinkedList<T> {
         headNode.previousNode = null;
         size--;
         return data;
+    }
+
+    @Override
+    public String toString() {
+        if(isEmpty()) {
+            return "LinkedList is empty";
+        }
+        var stringBuilder = new StringBuilder();
+        var linkedListIterator = iterator();
+        for(int i = 0; i < size - 1; i++) {
+            stringBuilder.append(linkedListIterator.next()).append(" <=> ");
+        }
+        return stringBuilder.append(linkedListIterator.next()).toString();
     }
 
 
