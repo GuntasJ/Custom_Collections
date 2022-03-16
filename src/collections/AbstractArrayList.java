@@ -45,12 +45,10 @@ public abstract class AbstractArrayList<T> implements List<T> {
             size++;
             return;
         }
-        if(size == internalArray.length) {
+        if(size == internalArray.length)
             allocateMemory();
-        }
-        for(int i = size; i > 0; i--) {
-            internalArray[i] = internalArray[i - 1];
-        }
+        if (size >= 0) System.arraycopy(internalArray, 0, internalArray, 1, size);
+        internalArray[0] = element;
         size++;
     }
     // 1 2 3
@@ -59,6 +57,19 @@ public abstract class AbstractArrayList<T> implements List<T> {
     @Override
     public void addAt(int index, T element) {
         Objects.checkIndex(index,size);
+        if(index == 0) {
+            addFirst(element);
+            return;
+        }
+        if(index == size - 1) {
+            addLast(element);
+            return;
+        }
+        if(size == internalArray.length)
+            allocateMemory();
+        if (size - index >= 0) System.arraycopy(internalArray, index, internalArray, index + 1, size - index);
+        internalArray[index] = element;
+        size++;
     }
 
     @Override
@@ -67,6 +78,11 @@ public abstract class AbstractArrayList<T> implements List<T> {
         internalArray[size - 1] = null;
         size--;
         return element;
+    }
+
+    @Override
+    public T removeFirst() {
+        return null;
     }
 
     @Override
@@ -80,8 +96,7 @@ public abstract class AbstractArrayList<T> implements List<T> {
     }
     @Override
     public T get(int index) {
-        if(index < 0 || index >= size)
-            throw new IndexOutOfBoundsException("Index must be within bound of ArrayList!");
+        Objects.checkIndex(index, size);
         if(index == 0) return getFirst();
         if(index == size - 1) return getLast();
         return internalArray[index];
@@ -142,7 +157,7 @@ public abstract class AbstractArrayList<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
 
             private int index = 0;
 

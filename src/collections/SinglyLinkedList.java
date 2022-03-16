@@ -78,7 +78,23 @@ public class SinglyLinkedList<T> extends AbstractLinkedList<T> {
 
     @Override
     public T removeLast() {
-        return null;
+        Node<T> currentNode = headNode;
+        while(currentNode.nextNode != tailNode) {
+            currentNode = currentNode.nextNode;
+        }
+        T data = tailNode.data;
+        currentNode.nextNode = null;
+        tailNode = currentNode;
+        size--;
+        return data;
+    }
+
+    @Override
+    public T removeFirst() {
+        T data = headNode.data;
+        headNode = headNode.nextNode;
+        size--;
+        return data;
     }
 
     @Override

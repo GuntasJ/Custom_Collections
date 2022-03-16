@@ -45,9 +45,11 @@ public abstract class AbstractLinkedList<T> implements List<T> {
 
     public abstract T removeLast();
 
+    public abstract T removeFirst();
+
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
 
             Node<T> currentNode = headNode;
 

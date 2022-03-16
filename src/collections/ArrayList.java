@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class ArrayList<T> extends AbstractArrayList<T> {
 
-    private static double MEMORY_GROWTH_FACTOR = 1.5;
+    private static final double MEMORY_GROWTH_FACTOR = 1.5;
 
     public ArrayList() {
         super();
