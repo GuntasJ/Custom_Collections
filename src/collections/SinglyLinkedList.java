@@ -93,36 +93,6 @@ public class SinglyLinkedList<T> extends AbstractLinkedList<T> {
     }
 
     @Override
-    public void clear() {
-        headNode = null;
-        size = 0;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public T[] toArray() {
-        Object[] array = new Object[size];
-        int i = 0;
-        for (T element : this) {
-            array[i++] = element;
-        }
-        return (T[])array;
-    }
-
-    @Override
-    public boolean contains(T element) {
-        if(isEmpty()) return false;
-        if(headNode.data.equals(element) || tailNode.data.equals(element)) return true;
-
-        for (T t : this) {
-            if (t.equals(element)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
     public String toString() {
         if(isEmpty()) {
             return "LinkedList is empty";

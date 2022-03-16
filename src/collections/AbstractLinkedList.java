@@ -39,6 +39,37 @@ public abstract class AbstractLinkedList<T> implements List<T> {
         }
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public T[] toArray() {
+        Object[] array = new Object[size];
+        int i = 0;
+        for(T t : this) {
+            array[i++] = t;
+        }
+        return (T[])array;
+    }
+
+    @Override
+    public boolean contains(T element) {
+        if(isEmpty()) return false;
+        if(headNode.data.equals(element) || tailNode.data.equals(element)) return true;
+
+        for (T t : this) {
+            if (t.equals(element)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void clear() {
+        headNode = null;
+        tailNode = null;
+        size = 0;
+    }
+
     public abstract T get(int index);
 
     public abstract void addLast(T element);

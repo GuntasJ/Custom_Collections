@@ -19,6 +19,8 @@ public class Main {
             integerDeque.addLast(i);
         }
 
+        System.out.println(integerDeque);
+
 
     }
 

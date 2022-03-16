@@ -19,12 +19,30 @@ public class DoublyLinkedList<T> extends AbstractLinkedList<T> {
 
     @Override
     public void addLast(T element) {
-
+        if(isEmpty()) {
+            addFirst(element);
+            return;
+        }
+        Node<T> appendingNode = new Node<>(element);
+        tailNode.nextNode = appendingNode;
+        appendingNode.previousNode = tailNode;
+        tailNode = tailNode.nextNode;
+        size++;
     }
 
     @Override
     public void addFirst(T element) {
-
+        if(isEmpty()) {
+            headNode = new Node<>(element);
+            tailNode = headNode;
+            size++;
+            return;
+        }
+        Node<T> prependingNode = new Node<>(element);
+        headNode.previousNode = prependingNode;
+        prependingNode.nextNode = headNode;
+        headNode = headNode.previousNode;
+        size++;
     }
 
     @Override
@@ -34,28 +52,32 @@ public class DoublyLinkedList<T> extends AbstractLinkedList<T> {
 
     @Override
     public T removeLast() {
-        return null;
+        if(isEmpty()) return null;
+        if(size == 1) {
+            T data = headNode.data;
+            headNode = null;
+            tailNode = null;
+            size--;
+            return data;
+        }
+        T data = tailNode.data;
+        tailNode = tailNode.previousNode;
+        tailNode.nextNode = null;
+        size--;
+        return data;
     }
 
     @Override
     public T removeFirst() {
-        return null;
+        if(isEmpty()) return null;
+        if(size == 1) return removeLast();
+        T data = headNode.data;
+        headNode = headNode.nextNode;
+        headNode.previousNode = null;
+        size--;
+        return data;
     }
 
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public T[] toArray() {
-        return null;
-    }
-
-    @Override
-    public boolean contains(T element) {
-        return false;
-    }
 
     public ListIterator<T> getListIterator(int startingIndex) {
         return new DoublyLinkedListIterator(startingIndex);
@@ -75,7 +97,7 @@ public class DoublyLinkedList<T> extends AbstractLinkedList<T> {
 
         @Override
         public boolean hasNext() {
-            return false;
+            return index < size;
         }
 
         @Override
