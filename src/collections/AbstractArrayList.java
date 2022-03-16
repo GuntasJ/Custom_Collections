@@ -10,23 +10,22 @@ public abstract class AbstractArrayList<T> implements List<T> {
     private static final int DEFAULT_ARRAY_SIZE = 10;
 
     protected int size;
-    protected T[] internalArray;
+    protected Object[] internalArray;
 
-    @SuppressWarnings("unchecked")
     protected AbstractArrayList() {
         size = 0;
-        internalArray = (T[])new Object[DEFAULT_ARRAY_SIZE];
+        internalArray = new Object[DEFAULT_ARRAY_SIZE];
     }
 
-    protected AbstractArrayList(T[] internalArray) {
+    protected AbstractArrayList(Object[] internalArray) {
         size = internalArray.length;
         this.internalArray = internalArray;
     }
 
-    @SuppressWarnings("unchecked")
+
     protected AbstractArrayList(int initialCapacity) {
         size = 0;
-        internalArray = (T[])new Object[initialCapacity];
+        internalArray = new Object[initialCapacity];
     }
 
     @Override
@@ -71,36 +70,44 @@ public abstract class AbstractArrayList<T> implements List<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T removeLast() {
-        T element = internalArray[size - 1];
+        T element = (T)internalArray[size - 1];
         internalArray[size - 1] = null;
         size--;
+        allocateLessMemory();
         return element;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T removeFirst() {
-        T data = internalArray[0];
+        T data = (T)internalArray[0];
         if (size >= 0) System.arraycopy(internalArray, 1, internalArray, 0, size);
         size--;
+        allocateLessMemory();
         return data;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T getFirst() {
-        return internalArray[0];
+        return (T)internalArray[0];
     }
+
     @Override
+    @SuppressWarnings("unchecked")
     public T getLast() {
         if(size == 0) getFirst();
-        return internalArray[size - 1];
+        return (T)internalArray[size - 1];
     }
     @Override
+    @SuppressWarnings("unchecked")
     public T get(int index) {
         Objects.checkIndex(index, size);
         if(index == 0) return getFirst();
         if(index == size - 1) return getLast();
-        return internalArray[index];
+        return (T)internalArray[index];
     }
 
     @Override
@@ -120,8 +127,9 @@ public abstract class AbstractArrayList<T> implements List<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T[] toArray() {
-        return Arrays.copyOf(internalArray, internalArray.length);
+        return (T[])Arrays.copyOf(internalArray, internalArray.length);
     }
 
     @Override
@@ -133,7 +141,7 @@ public abstract class AbstractArrayList<T> implements List<T> {
 
     @Override
     public boolean contains(T element) {
-        for (T t : internalArray) {
+        for (Object t: internalArray) {
             if (t.equals(element)) {
                 return true;
             }
@@ -146,13 +154,10 @@ public abstract class AbstractArrayList<T> implements List<T> {
         for(int i = 0; i < size; i++) {
             internalArray[i] = null;
         }
+        internalArray = Arrays.copyOf(internalArray, DEFAULT_ARRAY_SIZE);
         size = 0;
     }
 
-    public void deepClear() {
-        clear();
-        internalArray = Arrays.copyOf(internalArray, DEFAULT_ARRAY_SIZE);
-    }
 
     protected abstract void allocateMoreMemory();
 
@@ -170,8 +175,9 @@ public abstract class AbstractArrayList<T> implements List<T> {
             }
 
             @Override
+            @SuppressWarnings("unchecked")
             public T next() {
-                return internalArray[index++];
+                return (T)internalArray[index++];
             }
         };
     }

@@ -9,7 +9,6 @@ public interface Collection<T> {
     int getSize();
 
     /**
-     * This method should not be used. It is not working as of right now.
      * @return the collection as an array.
      */
     T[] toArray();

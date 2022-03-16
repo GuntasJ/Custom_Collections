@@ -2,12 +2,12 @@ package collections;
 
 import java.util.Iterator;
 
-public class LinkedQueue<T> extends AbstractQueue<T> {
+public class LinkedDeque<T> extends AbstractDeque<T> {
 
     private Node<T> headNode;
     private Node<T> tailNode;
 
-    public LinkedQueue() {
+    public LinkedDeque() {
         super();
         headNode = null;
         tailNode = null;
@@ -22,8 +22,25 @@ public class LinkedQueue<T> extends AbstractQueue<T> {
             size++;
             return;
         }
-        tailNode.nextNode = new Node<>(element);
-        tailNode = tailNode.nextNode;
+        Node<T> appendingNode = new Node<>(element);
+        tailNode.nextNode = appendingNode;
+        appendingNode.previousNode = tailNode;
+        tailNode = appendingNode;
+        size++;
+    }
+
+    @Override
+    public void addFirst(T element) {
+        if(isEmpty()) {
+            headNode = new Node<>(element);
+            tailNode = headNode;
+            size++;
+            return;
+        }
+        Node<T> prependingNode = new Node<>(element);
+        prependingNode.nextNode = headNode;
+        headNode.previousNode = prependingNode;
+        headNode = prependingNode;
         size++;
     }
 
@@ -42,13 +59,35 @@ public class LinkedQueue<T> extends AbstractQueue<T> {
         }
         T data = headNode.data;
         headNode = headNode.nextNode;
+        headNode.previousNode = null;
         size--;
         return data;
     }
 
     @Override
+    public T removeLast() {
+        if(isEmpty()) {
+            return null;
+        }
+        if(size == 1) {
+            return removeFirst();
+        }
+        T data = tailNode.data;
+        tailNode = tailNode.previousNode;
+        tailNode.nextNode = null;
+        size--;
+        return data;
+    }
+
+
+    @Override
     public T getFirst() {
         return headNode.data;
+    }
+
+    @Override
+    public T getLast() {
+        return tailNode.data;
     }
 
     @Override
@@ -83,7 +122,7 @@ public class LinkedQueue<T> extends AbstractQueue<T> {
         var stringBuilder = new StringBuilder();
         var queueIterator = iterator();
         for(int i = 0; i < size - 1; i++) {
-            stringBuilder.append(queueIterator.next()).append(" <- ");
+            stringBuilder.append(queueIterator.next()).append(" <=> ");
         }
         return stringBuilder.append(queueIterator.next()).toString();
     }

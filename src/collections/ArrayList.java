@@ -11,7 +11,7 @@ public class ArrayList<T> extends AbstractArrayList<T> {
         super();
     }
 
-    public ArrayList(T[] internalArray) {
+    public ArrayList(Object[] internalArray) {
         super(internalArray);
     }
 
@@ -26,6 +26,7 @@ public class ArrayList<T> extends AbstractArrayList<T> {
 
     @Override
     protected void allocateLessMemory() {
-        internalArray = Arrays.copyOf(internalArray, (int) (internalArray.length * MEMORY_SHRINKAGE_FACTOR));
+        if(size <= internalArray.length * MEMORY_SHRINKAGE_FACTOR)
+            internalArray = Arrays.copyOf(internalArray, (int) (internalArray.length * MEMORY_SHRINKAGE_FACTOR));
     }
 }

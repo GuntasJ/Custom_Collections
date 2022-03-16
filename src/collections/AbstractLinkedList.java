@@ -14,7 +14,7 @@ public abstract class AbstractLinkedList<T> implements List<T> {
         size = 0;
     }
 
-    protected AbstractLinkedList(T[] array) {
+    protected AbstractLinkedList(Object[] array) {
         makeCopyFromArray(array);
     }
 
@@ -32,8 +32,12 @@ public abstract class AbstractLinkedList<T> implements List<T> {
         return tailNode.data;
     }
 
-
-    protected abstract void makeCopyFromArray(T[] array);
+    @SuppressWarnings("unchecked")
+    protected void makeCopyFromArray(Object[] array) {
+        for(Object t : array) {
+            addLast((T)t);
+        }
+    }
 
     public abstract T get(int index);
 

@@ -8,16 +8,11 @@ public class SinglyLinkedList<T> extends AbstractLinkedList<T> {
     public SinglyLinkedList() {
         super();
     }
-    public SinglyLinkedList(T[] array) {
+    public SinglyLinkedList(Object[] array) {
         super(array);
     }
 
-    @Override
-    protected void makeCopyFromArray(T[] array) {
-        for(T element: array) {
-            addLast(element);
-        }
-    }
+
 
     @Override
     public T get(int index) {
@@ -106,12 +101,12 @@ public class SinglyLinkedList<T> extends AbstractLinkedList<T> {
     @Override
     @SuppressWarnings("unchecked")
     public T[] toArray() {
-        T[] array = (T[])new Object[size];
+        Object[] array = new Object[size];
         int i = 0;
         for (T element : this) {
             array[i++] = element;
         }
-        return array;
+        return (T[])array;
     }
 
     @Override
