@@ -82,6 +82,8 @@ public abstract class AbstractLinkedList<T> implements List<T> {
 
     public abstract T removeFirst();
 
+    protected abstract Node<T> getNodeAt(int index);
+
     @Override
     public Iterator<T> iterator() {
         return new Iterator<>() {

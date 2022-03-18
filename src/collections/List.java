@@ -1,5 +1,7 @@
 package collections;
 
+import java.util.ListIterator;
+
 public interface List<T> extends Collection<T>, Iterable<T> {
 
 
@@ -9,7 +11,7 @@ public interface List<T> extends Collection<T>, Iterable<T> {
 
     T removeLast();
     T removeFirst();
-    //T removeAt(int index);
+    T removeAt(int index);
     //T removeElement(T element);
 
     void clear();
@@ -20,5 +22,8 @@ public interface List<T> extends Collection<T>, Iterable<T> {
     T get(int index);
     T getFirst();
     T getLast();
+
+    ListIterator<T> getListIterator(int startingIndex);
+    ListIterator<T> getListIterator();
 
 }

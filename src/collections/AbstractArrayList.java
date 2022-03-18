@@ -2,6 +2,7 @@ package collections;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Objects;
 
 
@@ -87,6 +88,11 @@ public abstract class AbstractArrayList<T> implements List<T> {
         size--;
         allocateLessMemory();
         return data;
+    }
+
+    @Override
+    public T removeAt(int index) {
+        return null;
     }
 
     @Override
@@ -181,5 +187,15 @@ public abstract class AbstractArrayList<T> implements List<T> {
             }
         };
     }
+
+    @Override
+    public ListIterator<T> getListIterator(int startingIndex) {
+        return null;
+    }
+    @Override
+    public ListIterator<T> getListIterator() {
+        return null;
+    }
+
 
 }

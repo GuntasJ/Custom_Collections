@@ -1,6 +1,7 @@
 package collections;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Objects;
 
 public class SinglyLinkedList<T> extends AbstractLinkedList<T> {
@@ -22,6 +23,16 @@ public class SinglyLinkedList<T> extends AbstractLinkedList<T> {
             linkedListIterator.next();
         }
         return linkedListIterator.next();
+    }
+
+    @Override
+    public ListIterator<T> getListIterator(int startingIndex) {
+        return null;
+    }
+
+    @Override
+    public ListIterator<T> getListIterator() {
+        return null;
     }
 
     @Override
@@ -90,6 +101,16 @@ public class SinglyLinkedList<T> extends AbstractLinkedList<T> {
         headNode = headNode.nextNode;
         size--;
         return data;
+    }
+
+    @Override
+    public T removeAt(int index) {
+        return null;
+    }
+
+    @Override
+    protected Node<T> getNodeAt(int index) {
+        return null;
     }
 
     @Override

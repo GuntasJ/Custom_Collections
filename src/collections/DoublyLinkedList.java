@@ -15,7 +15,22 @@ public class DoublyLinkedList<T> extends AbstractLinkedList<T> {
 
     @Override
     public T get(int index) {
-        return null;
+        Node<T> currentNode;
+        if(index <= size) {
+            currentNode = headNode;
+            for(int i = 0; i < index; i++) {
+                currentNode = currentNode.nextNode;
+            }
+        }
+        else {
+            currentNode = tailNode;
+            for(int i = 0; i < size - index; i++) {
+                currentNode = currentNode.previousNode;
+            }
+        }
+        return currentNode.data;
+
+
     }
 
     @Override
@@ -71,7 +86,14 @@ public class DoublyLinkedList<T> extends AbstractLinkedList<T> {
             addingNode.previousNode = currentNode;
         }
         if(index > halfwayPoint) {
-
+            currentNode = tailNode;
+            for(int i = 0; i < size - index - 1; i++) {
+                currentNode = currentNode.previousNode;
+            }
+            addingNode.previousNode = currentNode.previousNode;
+            currentNode.previousNode.nextNode = addingNode;
+            currentNode.previousNode = addingNode;
+            addingNode.nextNode = currentNode;
         }
         size++;
     }
@@ -105,6 +127,19 @@ public class DoublyLinkedList<T> extends AbstractLinkedList<T> {
     }
 
     @Override
+    public T removeAt(int index) {
+        if(index == 0) return removeFirst();
+        if(index == size - 1) return removeLast();
+
+        Node<T> currentNode = getNodeAt(index);
+        T data = currentNode.data;
+        currentNode.previousNode.nextNode = currentNode.nextNode;
+        currentNode.nextNode.previousNode = currentNode.previousNode;
+        size--;
+        return data;
+    }
+
+    @Override
     public String toString() {
         if(isEmpty()) {
             return "LinkedList is empty";
@@ -117,22 +152,47 @@ public class DoublyLinkedList<T> extends AbstractLinkedList<T> {
         return stringBuilder.append(linkedListIterator.next()).toString();
     }
 
+    @Override
+    protected Node<T> getNodeAt(int index) {
+        Node<T> currentNode;
+        if(index <= size) {
+            currentNode = headNode;
+            for(int i = 0; i < index; i++) {
+                currentNode = currentNode.nextNode;
+            }
+        }
+        else {
+            currentNode = tailNode;
+            for(int i = 0; i < size - index; i++) {
+                currentNode = currentNode.previousNode;
+            }
+        }
+        return currentNode;
+    }
 
+
+    @Override
+    public ListIterator<T> getListIterator() {
+        return getListIterator(0);
+    }
+
+    @Override
     public ListIterator<T> getListIterator(int startingIndex) {
+        Objects.checkIndex(startingIndex, size);
         return new DoublyLinkedListIterator(startingIndex);
     }
 
     private class DoublyLinkedListIterator implements ListIterator<T> {
 
         private int index;
-
-        public DoublyLinkedListIterator() {
-            this(0);
-        }
+        private Node<T> currentNode;
 
         public DoublyLinkedListIterator(int startingIndex) {
             index = startingIndex;
+            currentNode = getNodeAt(index);
         }
+
+
 
         @Override
         public boolean hasNext() {
@@ -141,27 +201,33 @@ public class DoublyLinkedList<T> extends AbstractLinkedList<T> {
 
         @Override
         public T next() {
-            return null;
+            T data = currentNode.data;
+            index++;
+            currentNode = currentNode.nextNode;
+            return data;
         }
 
         @Override
         public boolean hasPrevious() {
-            return false;
+            return index > -1;
         }
 
         @Override
         public T previous() {
-            return null;
+            T data = currentNode.data;
+            index--;
+            currentNode = currentNode.previousNode;
+            return data;
         }
 
         @Override
         public int nextIndex() {
-            return 0;
+            return index;
         }
 
         @Override
         public int previousIndex() {
-            return 0;
+            return index - 1;
         }
 
         @Override
