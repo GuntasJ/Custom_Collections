@@ -140,6 +140,11 @@ public class DoublyLinkedList<T> extends AbstractLinkedList<T> {
     }
 
     @Override
+    public void removeElement(T element) {
+
+    }
+
+    @Override
     public String toString() {
         if(isEmpty()) {
             return "LinkedList is empty";
@@ -170,80 +175,5 @@ public class DoublyLinkedList<T> extends AbstractLinkedList<T> {
         return currentNode;
     }
 
-
-    @Override
-    public ListIterator<T> getListIterator() {
-        return getListIterator(0);
-    }
-
-    @Override
-    public ListIterator<T> getListIterator(int startingIndex) {
-        Objects.checkIndex(startingIndex, size);
-        return new DoublyLinkedListIterator(startingIndex);
-    }
-
-    private class DoublyLinkedListIterator implements ListIterator<T> {
-
-        private int index;
-        private Node<T> currentNode;
-
-        public DoublyLinkedListIterator(int startingIndex) {
-            index = startingIndex;
-            currentNode = getNodeAt(index);
-        }
-
-
-
-        @Override
-        public boolean hasNext() {
-            return index < size;
-        }
-
-        @Override
-        public T next() {
-            T data = currentNode.data;
-            index++;
-            currentNode = currentNode.nextNode;
-            return data;
-        }
-
-        @Override
-        public boolean hasPrevious() {
-            return index > -1;
-        }
-
-        @Override
-        public T previous() {
-            T data = currentNode.data;
-            index--;
-            currentNode = currentNode.previousNode;
-            return data;
-        }
-
-        @Override
-        public int nextIndex() {
-            return index;
-        }
-
-        @Override
-        public int previousIndex() {
-            return index - 1;
-        }
-
-        @Override
-        public void remove() {
-
-        }
-
-        @Override
-        public void set(T t) {
-
-        }
-
-        @Override
-        public void add(T t) {
-
-        }
-    }
 
 }

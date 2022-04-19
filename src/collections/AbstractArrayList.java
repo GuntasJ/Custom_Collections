@@ -65,7 +65,8 @@ public abstract class AbstractArrayList<T> implements List<T> {
         }
         if(size == internalArray.length)
             allocateMoreMemory();
-        if (size - index >= 0) System.arraycopy(internalArray, index, internalArray, index + 1, size - index);
+        if (size - index >= 0)
+            System.arraycopy(internalArray, index, internalArray, index + 1, size - index);
         internalArray[index] = element;
         size++;
     }
@@ -91,8 +92,30 @@ public abstract class AbstractArrayList<T> implements List<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T removeAt(int index) {
+        Objects.checkIndex(0, size);
+        T data = (T) internalArray[index];
+        if(index == 0) {
+            return removeFirst();
+        }
+        if(index == size - 1) {
+            return removeLast();
+        }
         return null;
+
+    }
+
+    @Override
+    public void removeElement(T element) {
+        int index = 0;
+        for(int i = 0; i < size; i++) {
+            if(internalArray[i].equals(element)) {
+                index = i;
+                break;
+            }
+        }
+        removeAt(index);
     }
 
     @Override
@@ -188,14 +211,6 @@ public abstract class AbstractArrayList<T> implements List<T> {
         };
     }
 
-    @Override
-    public ListIterator<T> getListIterator(int startingIndex) {
-        return null;
-    }
-    @Override
-    public ListIterator<T> getListIterator() {
-        return null;
-    }
 
 
 }

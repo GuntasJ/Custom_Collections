@@ -5,6 +5,11 @@ import java.util.ListIterator;
 public interface List<T> extends Collection<T>, Iterable<T> {
 
 
+    @SafeVarargs
+    static <T> List<T> of(T... args) {
+        return new ArrayList<>(args);
+    }
+
     void addLast(T element);
     void addFirst(T element);
     void addAt(int index, T element);
@@ -12,7 +17,7 @@ public interface List<T> extends Collection<T>, Iterable<T> {
     T removeLast();
     T removeFirst();
     T removeAt(int index);
-    //T removeElement(T element);
+    void removeElement(T element);
 
     void clear();
     int getSize();
@@ -23,7 +28,5 @@ public interface List<T> extends Collection<T>, Iterable<T> {
     T getFirst();
     T getLast();
 
-    ListIterator<T> getListIterator(int startingIndex);
-    ListIterator<T> getListIterator();
 
 }

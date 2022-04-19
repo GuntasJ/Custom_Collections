@@ -25,15 +25,6 @@ public class SinglyLinkedList<T> extends AbstractLinkedList<T> {
         return linkedListIterator.next();
     }
 
-    @Override
-    public ListIterator<T> getListIterator(int startingIndex) {
-        return null;
-    }
-
-    @Override
-    public ListIterator<T> getListIterator() {
-        return null;
-    }
 
     @Override
     public void addLast(T element) {
@@ -106,6 +97,11 @@ public class SinglyLinkedList<T> extends AbstractLinkedList<T> {
     @Override
     public T removeAt(int index) {
         return null;
+    }
+
+    @Override
+    public void removeElement(T element) {
+
     }
 
     @Override
